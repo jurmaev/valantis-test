@@ -4,7 +4,7 @@ import { fillItems, setFields } from './actions';
 import { api } from '../utils';
 
 const initialState: State = {
-  page: 1,
+  // page: 1,
   itemsPerPage: 50,
   items: [],
   fields: {

@@ -1,17 +1,29 @@
 import { FormEvent, useRef } from 'react';
-import { useAppSelector } from '../store';
+import { filter, useAppDispatch, useAppSelector } from '../store';
+import { FiltersType } from '../types';
 
 export function Filters() {
+  const dispatch = useAppDispatch();
   const brand = useAppSelector((store) => store.fields.brand);
   const price = useAppSelector((store) => store.fields.price);
   const nameRef = useRef<HTMLInputElement>(null);
   const brandRef = useRef<HTMLSelectElement>(null);
   const priceRef = useRef<HTMLSelectElement>(null);
 
-  function onSubmit(evt: FormEvent){
-    evt.preventDefault()
-    if(nameRef.current && brandRef.current && priceRef.current){
-      
+  function onSubmit(evt: FormEvent) {
+    evt.preventDefault();
+    if (nameRef.current && brandRef.current && priceRef.current) {
+      const filters: FiltersType = {};
+      if (nameRef.current.value !== '') {
+        filters.product = nameRef.current.value;
+      }
+      if (brandRef.current.value !== '') {
+        filters.brand = brandRef.current.value;
+      }
+      if (priceRef.current.value !== '') {
+        filters.price = Number(priceRef.current.value);
+      }
+      dispatch(filter(filters));
     }
   }
 

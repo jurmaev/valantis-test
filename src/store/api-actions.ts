@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { AppDispatch } from './store';
-import { Item, ResponseResult, State } from '../types';
+import { FiltersType, Item, ResponseResult, State } from '../types';
 import { fillItems, setFields } from './actions';
 
 export const fetchItems = createAsyncThunk<
@@ -47,4 +47,16 @@ export const fetchFields = createAsyncThunk<
       brand: [...new Set(brand.result.filter((name) => name))],
     })
   );
+});
+
+export const filter = createAsyncThunk<
+  void,
+  FiltersType,
+  { state: State; extra: AxiosInstance }
+>('filter', async (filters, { extra: api }) => {
+  const { data } = await api.post<ResponseResult<string[]>>('/', {
+    action: 'filter',
+    params: filters,
+  });
+  console.log(data);
 });
