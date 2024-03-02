@@ -14,7 +14,13 @@ const api = createApi();
 export const store = configureStore({
   reducer: createReducer(initialState, (builder) =>
     builder.addCase(fillItems, (state, action) => {
-      state.items = action.payload;
+      const seen: { [key: string]: boolean } = {};
+      const items = action.payload;
+      state.items = items.filter((item) => {
+        return Object.prototype.hasOwnProperty.call(seen, item.id)
+          ? false
+          : (seen[item.id] = true);
+      });
     })
   ),
   middleware: (getDefaultMiddleware) =>

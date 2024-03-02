@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { AppDispatch } from './store';
-import { Item, State } from '../types';
+import { Item, ResponseResult, State } from '../types';
 import { fillItems } from './actions';
 
 export const fetchItems = createAsyncThunk<
@@ -9,10 +9,13 @@ export const fetchItems = createAsyncThunk<
   { offset: number; limit: number },
   { dispatch: AppDispatch; state: State; extra: AxiosInstance }
 >('items/fetch', async ({ offset, limit }, { extra: api, dispatch }) => {
-  const { data } = await api.post<Item[]>('/', {
+  const { data: ids } = await api.post<ResponseResult<string[]>>('/', {
     action: 'get_ids',
     params: { offset, limit },
   });
-  console.log(data);
-  dispatch(fillItems(data));
+  const { data: items } = await api.post<ResponseResult<Item[]>>('/', {
+    action: 'get_items',
+    params: { ids: ids.result },
+  });
+  dispatch(fillItems(items.result));
 });
