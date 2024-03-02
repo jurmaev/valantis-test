@@ -433,3 +433,31 @@ p {
   border-left: none;
   border-right: none;
 }
+
+.aside {
+  float: left;
+  padding: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form__input,
+.form__select,
+.form__btn {
+  background-color: transparent;
+  border: 1px solid grey;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.form__btn {
+  cursor: pointer;
+}
+
+.form__btn:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}

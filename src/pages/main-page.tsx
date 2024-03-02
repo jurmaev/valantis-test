@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { fetchItems, useAppDispatch, useAppSelector } from '../store';
-import { Pagination } from '../components';
+import { fetchFields, fetchItems, useAppDispatch, useAppSelector } from '../store';
+import { Filters, Pagination } from '../components';
 import { useSearchParams } from 'react-router-dom';
 
 export function MainPage() {
@@ -12,12 +12,17 @@ export function MainPage() {
 
   useEffect(() => {
     dispatch(
-      fetchItems({ offset: Number(page) * itemsPerPage, limit: itemsPerPage })
+      fetchItems({
+        offset: (Number(page) - 1) * itemsPerPage,
+        limit: itemsPerPage,
+      })
     );
+    dispatch(fetchFields({offset: (Number(page) - 1) * itemsPerPage, limit: itemsPerPage}))
   }, [dispatch, itemsPerPage, page]);
 
   return (
     <main>
+      <Filters />
       <div className='container goods'>
         {items.map((item) => (
           <article key={item.id} className='goods__item'>
