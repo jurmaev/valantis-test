@@ -34,7 +34,6 @@ export function MainPage() {
         })
       );
     } else {
-      console.log(ids.slice((page - 1) * itemsPerPage, page * itemsPerPage));
       dispatch(
         fetchItemsByIds(
           ids.slice((page - 1) * itemsPerPage, page * itemsPerPage)

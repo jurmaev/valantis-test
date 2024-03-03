@@ -494,3 +494,27 @@ p {
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 1200px) {
+  .goods {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 920px) {
+  .goods {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 780px) {
+  .aside {
+    float: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .goods {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
