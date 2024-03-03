@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import md5 from 'md5';
 
-const baseURL = 'http://api.valantis.store:40000/';
+const baseURL = 'https://api.valantis.store:41000/';
 
 export const api = axios.create({ baseURL });
 
