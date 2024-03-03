@@ -42,15 +42,7 @@ export function Filters() {
       } else {
         searchParams.delete('price');
       }
-      // if (
-      //   nameRef.current.value !== '' ||
-      //   brandRef.current.value !== '' ||
-      //   priceRef.current.value !== ''
-      // ) {
-      //   dispatch(setIsFiltered(true));
-      // } else {
-      //   dispatch(setIsFiltered(false));
-      // }
+      
       searchParams.set('page', '1')
       setSearchParams(searchParams);
       dispatch(filter(filters));

@@ -10,7 +10,6 @@ import {
 import { api } from '../utils';
 
 const initialState: State = {
-  // page: 1,
   isFiltered: false,
   itemsPerPage: 50,
   items: [],
