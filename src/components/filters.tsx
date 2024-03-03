@@ -1,6 +1,7 @@
-import { FormEvent, useRef } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import { filter, useAppDispatch, useAppSelector } from '../store';
 import { FiltersType } from '../types';
+import { useSearchParams } from 'react-router-dom';
 
 export function Filters() {
   const dispatch = useAppDispatch();
@@ -9,6 +10,15 @@ export function Filters() {
   const nameRef = useRef<HTMLInputElement>(null);
   const brandRef = useRef<HTMLSelectElement>(null);
   const priceRef = useRef<HTMLSelectElement>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (nameRef.current && brandRef.current && priceRef.current) {
+      nameRef.current.value = searchParams.get('product') ?? '';
+      brandRef.current.value = searchParams.get('brand') ?? '';
+      priceRef.current.value = searchParams.get('price') ?? '';
+    }
+  }, [searchParams]);
 
   function onSubmit(evt: FormEvent) {
     evt.preventDefault();
@@ -16,13 +26,33 @@ export function Filters() {
       const filters: FiltersType = {};
       if (nameRef.current.value !== '') {
         filters.product = nameRef.current.value;
+        searchParams.set('product', nameRef.current.value);
+      } else {
+        searchParams.delete('product');
       }
       if (brandRef.current.value !== '') {
         filters.brand = brandRef.current.value;
+        searchParams.set('brand', brandRef.current.value);
+      } else {
+        searchParams.delete('brand');
       }
       if (priceRef.current.value !== '') {
         filters.price = Number(priceRef.current.value);
+        searchParams.set('price', priceRef.current.value);
+      } else {
+        searchParams.delete('price');
       }
+      // if (
+      //   nameRef.current.value !== '' ||
+      //   brandRef.current.value !== '' ||
+      //   priceRef.current.value !== ''
+      // ) {
+      //   dispatch(setIsFiltered(true));
+      // } else {
+      //   dispatch(setIsFiltered(false));
+      // }
+      searchParams.set('page', '1')
+      setSearchParams(searchParams);
       dispatch(filter(filters));
     }
   }

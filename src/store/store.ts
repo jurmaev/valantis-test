@@ -1,16 +1,25 @@
 import { configureStore, createReducer } from '@reduxjs/toolkit';
 import { State } from '../types';
-import { fillItems, setFields } from './actions';
+import {
+  fillIds,
+  fillItems,
+  setFields,
+  setIsFiltered,
+  setIsLoading,
+} from './actions';
 import { api } from '../utils';
 
 const initialState: State = {
   // page: 1,
+  isFiltered: false,
   itemsPerPage: 50,
   items: [],
   fields: {
     price: [],
     brand: [],
   },
+  ids: [],
+  isLoading: false,
 };
 
 export const store = configureStore({
@@ -27,6 +36,15 @@ export const store = configureStore({
       })
       .addCase(setFields, (state, action) => {
         state.fields = action.payload;
+      })
+      .addCase(setIsFiltered, (state, action) => {
+        state.isFiltered = action.payload;
+      })
+      .addCase(fillIds, (state, action) => {
+        state.ids = action.payload;
+      })
+      .addCase(setIsLoading, (state, action) => {
+        state.isLoading = action.payload;
       })
   ),
   middleware: (getDefaultMiddleware) =>

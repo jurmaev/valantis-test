@@ -1,6 +1,10 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-export function Pagination() {
+type PaginationProps = {
+  isEnd: boolean;
+};
+
+export function Pagination({ isEnd }: PaginationProps) {
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page') ?? '1';
   const navigate = useNavigate();
@@ -28,7 +32,8 @@ export function Pagination() {
       <button
         type='button'
         className='pagination__control'
-        onClick={onNextPageClick}>
+        onClick={onNextPageClick}
+        disabled={isEnd}>
         Следующая
       </button>
     </div>

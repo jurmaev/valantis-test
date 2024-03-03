@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import md5 from 'md5';
 
 const baseURL = 'http://api.valantis.store:40000/';
@@ -16,3 +16,10 @@ api.interceptors.request.use((config: AxiosRequestConfig) => {
   }
   return config;
 });
+
+api.interceptors.response.use((response) => response, (error: AxiosError) => {
+  if(error.response){
+    console.warn(`Error ID: ${error.response.data}`)
+    console.log(error.response)
+  }
+})
